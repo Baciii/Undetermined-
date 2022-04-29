@@ -5,13 +5,13 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.dao.User;
 import com.example.demo.dto.LoginFormDTO;
+import com.example.demo.dto.RegisterFormDTO;
 import com.example.demo.dto.Result;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
 import org.springframework.stereotype.Service;
 
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -37,4 +37,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         return Result.fail("密码错误");
     }
+
+    public Result register(RegisterFormDTO registerFormDTO) {
+        String account = registerFormDTO.getAccount();
+        User user = query().eq("account", account).one();
+        if(user!=null){
+            return Result.fail("该账户已存在");
+        }
+        String password = registerFormDTO.getPassword();
+        String again_password = registerFormDTO.getAgain_password();
+        if(!password.equals(again_password)){
+            return Result.fail("两次密码不一致");
+        }
+        User user1 = new User();
+        user1.setAccount(account);
+        user1.setPassword(password);
+
+        saveOrUpdate(user1);
+        return Result.ok("注册成功");
+    }
+
 }
