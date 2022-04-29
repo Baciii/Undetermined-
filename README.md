@@ -8,3 +8,6 @@
 安装router、Vuex、axios等依赖  
 导入font-awesome、element-ui  
 IDE中打开项目，检查接口号，请求参数，npm run serve打开脚手架  
+
+#### 后端
+######赶紧给我写！！！
