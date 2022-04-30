@@ -7,7 +7,7 @@
 |Vue-cli|脚手架
 |webpack|打包工具
 |node.js|服务器测试
-|elemen-ui|组件库
+|element-ui|组件库
 |font-awesome|组件库
 
 #### 后端
