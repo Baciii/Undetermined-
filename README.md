@@ -7,8 +7,10 @@
 |Vue-cli|脚手架
 |webpack|打包工具
 |node.js|服务器测试
-|element-ui|组件库
+|TDesign|组件库
 |font-awesome|组件库
+|Typescript|语法扩展
+|less|语法扩展
 
 #### 后端
 |技术|说明|
