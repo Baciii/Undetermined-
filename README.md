@@ -1,13 +1,14 @@
 ## 技术文档
 
 #### 前端
-
-脚手架：vue-cli  
-打包工具：webpack  
-配置Vue.js环境  
-安装router、Vuex、axios等依赖  
-导入font-awesome、element-ui  
-IDE中打开项目，检查接口号，请求参数，npm run serve打开脚手架  
+|技术|说明|
+|:--:|:--:|
+|Vue2.x|开发框架
+|Vue-cli|脚手架
+|webpack|打包工具
+|node.js|服务器测试
+|elemen-ui|组件库
+|font-awesome|组件库
 
 #### 后端
 |技术|说明|
@@ -23,6 +24,7 @@ IDE中打开项目，检查接口号，请求参数，npm run serve打开脚手�
 |:--:|:--:
 |JDK|1.8
 |Mysql|5.7
+|Node.js|>14.0.0
 
 
 ### 目前实现模块
