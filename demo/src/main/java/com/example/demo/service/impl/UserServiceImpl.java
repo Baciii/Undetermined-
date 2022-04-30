@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import cn.hutool.crypto.digest.MD5;
 import cn.hutool.json.JSONUtil;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,6 +10,7 @@ import com.example.demo.dto.RegisterFormDTO;
 import com.example.demo.dto.Result;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
+import com.example.demo.utils.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -30,7 +32,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return Result.fail("账号错误");
         }
 
-        if(user.getPassword().equals(password)){
+        //密码匹配
+        Boolean matches = PasswordEncoder.matches(user.getPassword(), password);
+
+        if(matches){
             String jsonUser = JSONUtil.toJsonStr(user);
             return Result.ok(jsonUser);
         }
@@ -51,7 +56,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         User user1 = new User();
         user1.setAccount(account);
-        user1.setPassword(password);
+        //密码加密
+        String encode = PasswordEncoder.encode(password);
+        user1.setPassword(encode);
 
         saveOrUpdate(user1);
         return Result.ok("注册成功");
