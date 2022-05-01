@@ -44,6 +44,8 @@
 npm i tdesign-vue 引入TDesign  
 npm install font-awesome --save 引入font-awesome  
 安装vuex、vue-router依赖  
+修改样式时注意要使用scoped，否则组件库可能会加载失败  
+本地运行需要在vue.config.js中配置代理服务器的端口号、前缀  
 npm run serve 运行项目  
 
 # To Be Continue...
