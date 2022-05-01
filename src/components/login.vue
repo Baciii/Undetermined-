@@ -15,14 +15,20 @@
           <form action="#" class="form">
             <div>
               <i class="fa fa-user-o"></i>
-              <input type="text" placeholder="username" />
+              <!-- 登录用户名输入 -->
+              <input type="text" placeholder="username" v-model="log.account" />
             </div>
             <div>
               <i class="fa fa-key"></i>
-              <input type="password" placeholder="password" />
+              <!-- 登录密码输入 -->
+              <input
+                type="password"
+                placeholder="password"
+                v-model="log.password"
+              />
             </div>
             <div class="btn">
-              <button>login</button>
+              <button @click="login">login</button>
             </div>
           </form>
           <p class="btn-something">
@@ -40,18 +46,21 @@
           <form action="#" class="form">
             <div>
               <i class="fa fa-user-o"></i>
+              <!-- 注册用户名输入 -->
               <input type="text" placeholder="username" />
             </div>
             <div>
               <i class="fa fa-key"></i>
+              <!-- 注册密码输入 -->
               <input type="password" placeholder="password" />
             </div>
             <div>
               <i class="fa fa-key"></i>
+              <!-- 注册密码确认 -->
               <input type="password" placeholder="confirm password" />
             </div>
             <div class="btn">
-              <button>signup</button>
+              <button @click="signup">signup</button>
             </div>
           </form>
           <p class="btn-something">
@@ -64,12 +73,23 @@
   </div>
 </template>
 
+
 <script>
+import axios from "axios";
 export default {
   name: "login",
   data() {
     return {
       head: "account login",
+      re: {
+        reusername: "",
+        repwd: "",
+        confirmpwd: "",
+      },
+      log: {
+        account: "",
+        password: "",
+      },
     };
   },
   methods: {
@@ -83,11 +103,43 @@ export default {
       this.$refs.login.style.transform = "rotateY(180deg)";
       this.$refs.signup.style.transform = "rotateY(0deg)";
     },
+    signup() {
+      console.log("signup");
+      // axios({
+      //   method: "post",
+      //   url: "http://localhost:8080/api/user/register",
+      //   data: this.re,
+      // }).then(
+      //   (res) => {
+      //     console.log(res.data);
+      //   },
+      //   (error) => {
+      //     console.log(error.message);
+      //   }
+      // );
+    },
+    login() {
+      console.log("login");
+      this.$router.push({ name: "homepage" });
+      //请求
+      // axios({
+      //   method: "post",
+      //   url: "http://localhost:8080/api/user/admin",
+      //   data: this.log,
+      // }).then(
+      //   (res) => {
+      //     console.log(res.data);
+      //   },
+      //   (error) => {
+      //     console.log(error.message);
+      //   }
+      // );
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 * {
   padding: 0;
   margin: 0;
