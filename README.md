@@ -39,5 +39,11 @@
 - 分享板块（实时面经、岗位、内推、踩雷）
 - 灌水区
 
+### 快速上手  
+#### 前端
+npm i tdesign-vue 引入TDesign  
+npm install font-awesome --save 引入font-awesome  
+安装vuex、vue-router依赖  
+npm run serve 运行项目  
 
 # To Be Continue...
