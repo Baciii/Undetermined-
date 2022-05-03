@@ -24,10 +24,11 @@ class DemoApplicationTests {
         user.put("account","123");
         user.put("password","123");
         String token = JWTUtil.createToken(user, key);
-        System.out.println(token);
+        boolean verify = JWTUtil.verify(token, key);
+        System.out.println(verify);
         JWT jwt = JWTUtil.parseToken(token);
         JSONObject payloads = jwt.getPayloads();
-        System.out.println(payloads);
+        System.out.println(payloads.get("account"));
     }
 
     @Test

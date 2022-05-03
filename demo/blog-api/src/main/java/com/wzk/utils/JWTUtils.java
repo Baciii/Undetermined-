@@ -17,14 +17,14 @@ public class JWTUtils {
     private static final byte[] key="123".getBytes();
 
     public static String createToken(SysUser user){
+
         Map<String, Object> map = BeanUtil.beanToMap(user);
         String token = JWTUtil.createToken(map, key);
         return token;
     }
 
-    public static SysUser parseToken(String token){
-        JSONObject payloads = JWTUtil.parseToken(token).getPayloads();
-        SysUser sysUser = JSONUtil.toBean(payloads, SysUser.class);
-        return sysUser;
+    public static Boolean parseToken(String token){
+        boolean verify = JWTUtil.verify(token, key);
+        return verify;
     }
 }

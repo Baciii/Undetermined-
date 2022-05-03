@@ -45,11 +45,15 @@ public class LoginServiceImpl implements LoginService {
         if(StrUtil.isBlank(account)||StrUtil.isBlank(password)){
             return Result.fail("账号或者密码不能为空");
         }
-        password = PasswordEncoder.encode(password);
-        SysUser sysUser = sysUserService.findUserByAccountAndPwd(account,password);
+        SysUser sysUser = sysUserService.findUserByAccount(account);
         if(sysUser==null){
-            return Result.fail("登录失败");
+            return Result.fail("用户不存在");
         }
+        Boolean matches = PasswordEncoder.matches(sysUser.getPassword(), password);
+        if(!matches){
+            return Result.fail("用户或密码错误");
+        }
+
         String token = JWTUtils.createToken(sysUser);
 
         stringRedisTemplate.opsForValue().set("login:token:"+token, JSONUtil.toJsonStr(sysUser),1L, TimeUnit.DAYS);
@@ -62,13 +66,13 @@ public class LoginServiceImpl implements LoginService {
             return null;
         }
         //仅作判断token是否合法
-        SysUser sysUser = JWTUtils.parseToken(token);
-        if(sysUser==null){
+        Boolean aBoolean = JWTUtils.parseToken(token);
+        if(!aBoolean){
             return null;
         }
         String userJson = stringRedisTemplate.opsForValue().get("login:token" + token);
-        SysUser sysUser1 = JSONUtil.toBean(userJson, SysUser.class);
-        return sysUser1;
+        SysUser sysUser = JSONUtil.toBean(userJson, SysUser.class);
+        return sysUser;
     }
 
     @Override
