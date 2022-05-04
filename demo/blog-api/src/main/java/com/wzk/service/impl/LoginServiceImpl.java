@@ -115,7 +115,7 @@ public class LoginServiceImpl implements LoginService {
         sysUser = new SysUser();
         sysUser.setNickname(nickname);
         sysUser.setAccount(account);
-        sysUser.setPassword(password);
+        sysUser.setPassword(PasswordEncoder.encode(password));
         sysUser.setCreateDate(System.currentTimeMillis());
         sysUser.setLastLogin(System.currentTimeMillis());
         sysUser.setDeleted(0);
