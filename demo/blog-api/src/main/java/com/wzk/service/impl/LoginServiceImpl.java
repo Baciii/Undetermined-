@@ -105,7 +105,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         SysUser sysUser = sysUserService.findUserByAccount(account);
-        if(sysUser==null){
+        if(sysUser!=null){
             return Result.fail("该用户已被注册");
         }
         sysUser = sysUserService.findUserByNickName(nickname);
