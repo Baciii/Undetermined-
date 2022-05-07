@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div>
-      <guide />
-    </div>
+  <div class="main">
+    <ShareGuide />
     <div class="content">
       <router-view></router-view>
     </div>
@@ -11,36 +9,27 @@
 
 <script>
 import { Icon } from "tdesign-icons-vue";
-import guide from "./guide.vue";
+import ShareGuide from "./ShareGuide.vue";
 export default {
-  name: "PersonalCenter",
+  name: "Share",
   components: {
     Icon,
-    guide,
+    ShareGuide,
   },
-  data() {
-    return {
-      visible: false,
-    };
-  },
-  methods: {},
 };
 </script>
 
 <style scoped>
-/* .Centerguide {
-  top: 85px;
-  left: 0px;
-  height: 90%;
-  margin-right: 30px;
-}*/
+.box {
+  height: calc(100% - 84px);
+}
 .content {
   position: absolute;
   margin-top: 10px;
   right: 10px;
   top: 64px;
-  height: calc(100% - 84px);
-  /* height: 1000px; */
+  /* height: calc(100% - 84px); */
+  height: 1000px;
   width: calc(100% - 262px);
   /* background-color: pink; */
   background-color: #fff;

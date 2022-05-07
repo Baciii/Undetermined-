@@ -8,6 +8,8 @@ import PersonalCenter from '../pages/PersonalCenter.vue'
 import Technology from '../pages/Technology.vue'
 import PersonalInformation from '../pages/PersonalInformation.vue'
 import Recommend from '../pages/Recommend.vue'
+import ChangeInf from '../pages/ChangeInf.vue'
+import Share from '../pages/Share.vue'
 
 const router = new VueRouter({
     mode: "history",
@@ -35,11 +37,19 @@ const router = new VueRouter({
                 name: 'PersonalInformation',
                 path: 'PersonalInformation',
                 component: PersonalInformation
+            }, {
+                name: 'ChangeInf',
+                path: 'ChangeInf',
+                component: ChangeInf
             }]
         }, {
             name: 'Recommend',
             path: 'Recommend',
             component: Recommend
+        }, {
+            name: 'Share',
+            path: 'Share',
+            component: Share
         }]
     }]
 })

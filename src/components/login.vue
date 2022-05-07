@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg> -->
+    <!-- <wrongpwd class="warn" /> -->
     <div class="user">
       <i class="fa fa-user"></i>
       <div class="head">{{ head }}</div>
@@ -76,8 +77,10 @@
 
 <script>
 import axios from "axios";
+import wrongpwd from "../pages/wrongpwd.vue";
 export default {
   name: "login",
+  components: { wrongpwd },
   data() {
     return {
       head: "account login",
@@ -120,26 +123,31 @@ export default {
     },
     login() {
       console.log("login");
-      this.$router.push({ name: "homepage" });
+      this.$router.push({ name: "PersonalInformation" });
       //请求
-      // axios({
-      //   method: "post",
-      //   url: "http://localhost:8080/api/user/admin",
-      //   data: this.log,
-      // }).then(
-      //   (res) => {
-      //     console.log(res.data);
-      //   },
-      //   (error) => {
-      //     console.log(error.message);
-      //   }
-      // );
+      axios({
+        method: "post",
+        url: "http://localhost:8080/api/admin",
+        data: this.log,
+      }).then(
+        (res) => {
+          if (res.data.success == true) {
+            console.log(res.data);
+            this.$router.push({ name: "PersonalInformation" });
+          } else {
+            console.log(res.data.errorMsg);
+          }
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 * {
   padding: 0;
   margin: 0;
@@ -318,5 +326,10 @@ svg {
     1px 4px 1px rgba(16, 16, 16, 0.1), 1px 5px 1px rgba(16, 16, 16, 0.1),
     1px 6px 1px rgba(16, 16, 16, 0.1), 1px 7px 1px rgba(16, 16, 16, 0.1),
     1px 8px 1px rgba(16, 16, 16, 0.1);
+}
+.warn {
+  position: absolute;
+  top: 100px;
+  left: 39%;
 }
 </style>

@@ -8,6 +8,7 @@
 // import HelloWorld from "./components/HelloWorld.vue";
 import login from "./components/login.vue";
 import homepage from "./components/homepage.vue";
+import Vue from "vue";
 
 export default {
   name: "App",
@@ -15,7 +16,9 @@ export default {
     login,
     homepage,
   },
-  mounted() {},
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
 };
 </script>
 
