@@ -1,0 +1,29 @@
+server:
+  port: 8888
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/data?useSSL=false&serverTimezone=UTC
+    username: root
+    password: wzk
+  redis:
+    host: 192.168.153.129
+    port: 6379
+    password: 123
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 1
+        time-between-eviction-runs: 10s
+  jackson:
+    default-property-inclusion: non_null # JSON处理时忽略非空字段
+mybatis-plus:
+  configuration:
+    # 配置MyBatis日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.wzk.dao # 别名扫描包
+  global-config:
+    db-config:
+      table-prefix: ms_
