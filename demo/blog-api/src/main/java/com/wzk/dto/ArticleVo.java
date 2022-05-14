@@ -26,12 +26,13 @@ public class ArticleVo {
 
     private String author;
 
+    //标签
     private List<TagVo> tags;
 
-//    private ArticleBodyVo body;
+    //文章
+    private ArticleBodyVo body;
 
-
-
-//    private CategoryVo category;
+    //
+    private ArticleCategoryVo category;
 
 }

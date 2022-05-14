@@ -1,12 +1,9 @@
 package com.wzk.controller;
 
-import com.wzk.dto.PageParams;
+import com.wzk.dto.params.PageParams;
 import com.wzk.dto.Result;
 import com.wzk.service.ArticleService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -51,6 +48,10 @@ public class ArticleController {
         return articleService.newArticle(limit);
     }
 
+    @PostMapping("/view/{id}")
+    public Result findArticleById(@PathVariable("id") Long articleId){
+        return articleService.findArticleById(articleId);
+    }
     /**
      * 文章归档
      * @return

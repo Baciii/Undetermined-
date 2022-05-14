@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wzk.dao.SysUser;
 import com.wzk.dto.LoginUserVo;
 import com.wzk.dto.Result;
+import com.wzk.dto.UserVo;
 import com.wzk.mapper.SysUserMapper;
 import com.wzk.service.LoginService;
 import com.wzk.service.SysUserService;
@@ -26,6 +27,12 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
 
     @Resource
     private SysUserMapper sysUserMapper;
+
+    @Override
+    public UserVo findUserVoByAuthorId(Long authorId) {
+        SysUser sysUser = sysUserMapper.selectById(authorId);
+        return BeanUtil.copyProperties(sysUser,UserVo.class);
+    }
 
     @Override
     public Result findUserByToken(String token) {
