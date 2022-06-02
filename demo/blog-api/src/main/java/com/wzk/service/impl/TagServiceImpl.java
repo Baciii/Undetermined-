@@ -8,6 +8,7 @@ import com.wzk.dto.TagVo;
 import com.wzk.mapper.TagMapper;
 import com.wzk.service.TagService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;

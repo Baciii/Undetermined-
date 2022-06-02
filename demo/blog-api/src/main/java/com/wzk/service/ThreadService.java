@@ -14,7 +14,6 @@ import javax.annotation.Resource;
  * @date 2022/5/14 23:59
  */
 @Component
-@Transactional
 public class ThreadService {
     @Resource
     private ArticleMapper articleMapper;

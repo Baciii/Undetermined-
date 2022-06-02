@@ -3,6 +3,7 @@ package com.wzk.service;
 
 import com.wzk.dto.Result;
 import com.wzk.dto.params.CommentParam;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author wzk

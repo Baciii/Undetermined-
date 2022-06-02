@@ -1,6 +1,7 @@
 package com.wzk.service;
 
 import com.wzk.dto.ArticleCategoryVo;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**

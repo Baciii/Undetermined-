@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @author wzk
  * @date 2022/5/2 11:20
  */
+
 @Service
 //@Transactional //添加事务进行回滚
 public class LoginServiceImpl implements LoginService {

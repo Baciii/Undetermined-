@@ -16,16 +16,16 @@ public class WebMVCConfig implements WebMvcConfigurer {
     @Resource
     private LoginInterceptor loginInterceptor;
 
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry){
-//        //跨域配置
-//        registry.addMapping("/**").allowedOrigins("http://localhost:8080");
-//    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry){
+        //跨域配置
+        registry.addMapping("/**").allowedOrigins("http://localhost:8080");
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/test")
+                .addPathPatterns("/articles/publish")
                 .addPathPatterns("/comment/create/change");
     }
 }

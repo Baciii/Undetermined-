@@ -15,6 +15,7 @@ import com.wzk.service.CommentService;
 import com.wzk.service.SysUserService;
 import com.wzk.utils.UserThreadLocal;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
  * @author wzk
  * @date 2022/5/14 23:31
  */
+
 @Service
 public class CommentServiceImpl implements CommentService {
     @Resource

@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  */
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
 
     @Resource

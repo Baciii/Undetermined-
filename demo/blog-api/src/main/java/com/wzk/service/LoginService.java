@@ -3,6 +3,7 @@ package com.wzk.service;
 import com.wzk.dao.SysUser;
 import com.wzk.dto.LoginForm;
 import com.wzk.dto.Result;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author wzk

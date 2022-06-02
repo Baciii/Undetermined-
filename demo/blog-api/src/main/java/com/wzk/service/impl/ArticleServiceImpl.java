@@ -16,6 +16,7 @@ import com.wzk.mapper.ArticleBodyMapper;
 import com.wzk.mapper.ArticleMapper;
 import com.wzk.service.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
  * @author wzk
  * @date 2022/5/1 21:26
  */
+
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
@@ -65,7 +67,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getViewCounts);
         queryWrapper.select(Article::getId,Article::getTitle);
-        queryWrapper.last("limit"+limit);
+        queryWrapper.last("limit "+limit);
         List<Article> articles = articleMapper.selectList(queryWrapper);
         return Result.ok(copyList(articles,false,false));
     }
@@ -76,7 +78,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getCreateDate);
         queryWrapper.select(Article::getId,Article::getTitle);
-        queryWrapper.last("limit"+limit);
+        queryWrapper.last("limit "+limit);
         List<Article> articles = articleMapper.selectList(queryWrapper);
         return Result.ok(copyList(articles,false,false));
     }

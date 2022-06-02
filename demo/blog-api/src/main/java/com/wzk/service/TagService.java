@@ -6,6 +6,7 @@ import com.wzk.dao.Tag;
 import com.wzk.dto.Result;
 import com.wzk.dto.TagVo;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

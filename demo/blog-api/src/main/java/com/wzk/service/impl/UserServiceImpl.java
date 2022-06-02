@@ -12,6 +12,7 @@ import com.wzk.mapper.SysUserMapper;
 import com.wzk.service.LoginService;
 import com.wzk.service.SysUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 

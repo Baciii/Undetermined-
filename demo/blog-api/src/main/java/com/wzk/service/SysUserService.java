@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wzk.dao.SysUser;
 import com.wzk.dto.Result;
 import com.wzk.dto.UserVo;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author wzk
