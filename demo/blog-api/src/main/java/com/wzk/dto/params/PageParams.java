@@ -1,4 +1,4 @@
-package com.wzk.dto;
+package com.wzk.dto.params;
 
 import lombok.Data;
 

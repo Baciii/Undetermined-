@@ -7,14 +7,16 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wzk.dao.Archives;
 import com.wzk.dao.Article;
+import com.wzk.dao.ArticleBody;
+import com.wzk.dto.ArticleBodyVo;
 import com.wzk.dto.ArticleVo;
-import com.wzk.dto.PageParams;
+import com.wzk.dto.params.PageParams;
 import com.wzk.dto.Result;
+import com.wzk.mapper.ArticleBodyMapper;
 import com.wzk.mapper.ArticleMapper;
-import com.wzk.service.ArticleService;
-import com.wzk.service.SysUserService;
-import com.wzk.service.TagService;
+import com.wzk.service.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -24,8 +26,12 @@ import java.util.List;
  * @author wzk
  * @date 2022/5/1 21:26
  */
+
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
+
+    @Resource
+    private ThreadService threadService;
 
     @Resource
     private ArticleMapper articleMapper;
@@ -35,6 +41,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Resource
     private SysUserService sysUserService;
+
+    @Resource
+    private CategoryService categoryService;
 
     @Override
     public Result listArticle(PageParams pageParams) {
@@ -58,7 +67,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getViewCounts);
         queryWrapper.select(Article::getId,Article::getTitle);
-        queryWrapper.last("limit"+limit);
+        queryWrapper.last("limit "+limit);
         List<Article> articles = articleMapper.selectList(queryWrapper);
         return Result.ok(copyList(articles,false,false));
     }
@@ -69,7 +78,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.orderByDesc(Article::getCreateDate);
         queryWrapper.select(Article::getId,Article::getTitle);
-        queryWrapper.last("limit"+limit);
+        queryWrapper.last("limit "+limit);
         List<Article> articles = articleMapper.selectList(queryWrapper);
         return Result.ok(copyList(articles,false,false));
     }
@@ -81,16 +90,40 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return Result.ok(archives);
     }
 
+    @Override
+    public Result findArticleById(Long articleId) {
+        /**
+         * 根据id查询 文章信息
+         * 根据bodyId和categoryId 关联查询
+         */
+        Article article = articleMapper.selectById(articleId);
+        ArticleVo articleVo = copy(article, true, true,true,true);
+
+        //查询文章过后更新阅读数
+        //需要考虑如果当前文章正在更新加写锁（一旦更新操作出了问题就不能查询文章），阻塞其它的读操作，性能低
+        //引入线程池 把更新操作扔到线程池中执行，这样就和主线程无关了
+        threadService.updateViewCount(articleMapper,article);
+        return Result.ok(articleVo);
+    }
+
     private List<ArticleVo> copyList(List<Article> records,boolean isTag,boolean isAuthor){
         List<ArticleVo> articleVoList = new ArrayList<>();
         for(Article record:records){
-            articleVoList.add(copy(record,true,true));
+            articleVoList.add(copy(record,isTag,isAuthor,false,false));
+        }
+        return articleVoList;
+    }
+
+    private List<ArticleVo> copyList(List<Article> records,boolean isTag,boolean isAuthor,boolean isBody,boolean isCategory){
+        List<ArticleVo> articleVoList = new ArrayList<>();
+        for(Article record:records){
+            articleVoList.add(copy(record,isTag,isAuthor,isBody,isCategory));
         }
         return articleVoList;
     }
 
 
-    private ArticleVo copy(Article article,boolean isTag,boolean isAuthor){
+    private ArticleVo copy(Article article,boolean isTag,boolean isAuthor,boolean isBody,boolean isCategory){
         //注意vo是datetime String  另外一个是Long
         ArticleVo articleVo = new ArticleVo();
         BeanUtil.copyProperties(article,articleVo);
@@ -105,6 +138,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             Long authorId = article.getAuthorId();
             articleVo.setAuthor(sysUserService.findUserById(authorId).getNickname());
         }
+        if(isBody){
+            Long bodyId = article.getBodyId();
+            articleVo.setBody(findArticleBodyById(bodyId));
+        }
+        if(isCategory){
+            Long categoryId = article.getCategoryId();
+            articleVo.setCategory(categoryService.findCategoryById(categoryId));
+        }
         return articleVo;
+    }
+
+    @Resource
+    private ArticleBodyMapper articleBodyMapper;
+    private ArticleBodyVo findArticleBodyById(Long bodyId) {
+        ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
+        ArticleBodyVo articleBodyVo = new ArticleBodyVo();
+        articleBodyVo.setContent(articleBody.getContent());
+        return articleBodyVo;
     }
 }

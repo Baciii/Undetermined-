@@ -18,27 +18,29 @@
     </resultMap>
 
     <select id="listArchives" resultType="com.wzk.dao.Archives">
-        select FROM_UNIXTIME(create_date/1000,'%Y') as year,FROM_UNIXTIME(create_date/1000,'%m') as month,count(*) as count from ms_article group by year,month
+--         select FROM_UNIXTIME(create_date/1000,'%Y') as year,FROM_UNIXTIME(create_date/1000,'%m') as month,count(*) as count from ms_article group by year,month
+--         SELECT YEAR(create_date) as year, MONTH(create_date) as month, COUNT(*) as count FROM blog_article GROUP BY year, month
     </select>
-<!--    &lt;!&ndash;            Long categoryId,-->
-<!--                               Long tagId,-->
-<!--                               String year,-->
-<!--                               String month&ndash;&gt;-->
-<!--    <select id="listArticle" resultMap="articleMap">-->
-<!--        select * from ms_article-->
+
+    <!--            Long categoryId,
+                               Long tagId,
+                               String year,
+                               String month-->
+<!--    <select id="listArticle" resultType="com.wzk.dao.Article">-->
+<!--        SELECT * FROM blog_article-->
 <!--        <where>-->
 <!--            1 = 1-->
 <!--            <if test="categoryId != null">-->
-<!--                and category_id=#{categoryId}-->
-<!--            </if>-->
-<!--            <if test="tagId != null">-->
-<!--                and id in (select article_id from ms_article_tag where tag_id=#{tagId})-->
+<!--                AND category_id = #{categoryId}-->
 <!--            </if>-->
 <!--            <if test="year != null and year.length>0 and month != null and month.length>0">-->
-<!--               and (FROM_UNIXTIME(create_date/1000,'%Y') =#{year} and FROM_UNIXTIME(create_date/1000,'%m')=#{month})-->
+<!--                AND ( YEAR(create_date) = #{year} AND MONTH(create_date) = #{month} )-->
+<!--            </if>-->
+<!--            <if test="tagId != null">-->
+<!--                AND id IN (SELECT article_id FROM blog_article_tag WHERE tag_id=#{tagId})-->
 <!--            </if>-->
 <!--        </where>-->
-<!--        order by weight,create_date desc-->
+<!--        ORDER BY create_date DESC-->
 <!--    </select>-->
 
 </mapper>

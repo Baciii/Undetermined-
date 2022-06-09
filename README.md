@@ -29,6 +29,10 @@
 |redis|6.2
 |Node.js|>14.0.0
 
+### 已实现的接口
+- 登录和注册
+- 文章查询和评论功能
+- 标签功能
 
 ### 已实现模块
 - 用户的登录与注册
@@ -42,9 +46,7 @@
 
 ### 快速上手  
 #### 前端
-npm i tdesign-vue 引入TDesign  
-npm install font-awesome --save 引入font-awesome  
-安装vuex、vue-router依赖  
+npm i 安装依赖  
 修改样式时注意要使用scoped，否则组件库可能会加载失败  
 本地运行需要在vue.config.js中配置代理服务器的端口号、前缀  
 npm run serve 运行项目  
